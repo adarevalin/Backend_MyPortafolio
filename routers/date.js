@@ -1,7 +1,7 @@
 const express = require('express');
 
-const routerArticulos = express.Router();
-routerArticulos.use(express.json());
+const routerDate = express.Router();
+routerDate.use(express.json());
 
 //Servicio general de GET, POST con select total
 const ServicieGet = require('../services/ServiciesGet.js');
@@ -10,16 +10,16 @@ const ServiciesPut = require("../services/ServiciesPut.js");
 const ServiciesDelete = require("../services/ServiciesDelete.js");
 
 // servicios especificos para cada ruta
-const Articulos = ServicieGet('Articulos');
-const PostArticulos = ServicesPost('Articulos');
-const PutArticulos = ServiciesPut('Articulos');
-const DeleteArticulo = ServiciesDelete('Articulos');
+const Date = ServicieGet('datos');
+const PostDate = ServicesPost('datos');
+const PutDate = ServiciesPut('datos');
+const DeleteDate = ServiciesDelete('datos');
 
 // utilizar metodos
 
-routerArticulos.get('/', async (req,res) => {
+routerDate.get('/', async (req,res) => {
     try {
-        const getServicies = await Articulos();
+        const getServicies = await Date();
         const element = await getServicies();
         res.json(element);
 
@@ -28,10 +28,10 @@ routerArticulos.get('/', async (req,res) => {
     }
 });
 
-routerArticulos.post ('/', async (req,res)=>{
+routerDate.post ('/', async (req,res)=>{
     const Nuevoarticulo = req.body;
     try { 
-        const PostServicies = await PostArticulos();
+        const PostServicies = await PostDate();
         const element = await PostServicies(Nuevoarticulo);
         res.json(element);
 
@@ -41,12 +41,12 @@ routerArticulos.post ('/', async (req,res)=>{
   });
 
 
-routerArticulos.put ('/', async (req, res) => {
+routerDate.put ('/', async (req, res) => {
     //const id = req.params.id;
     const Nuevoarticulo = req.body;
     
     try {
-        const PutServicie = await PutArticulos();
+        const PutServicie = await PutDate();
         const element = await PutServicie(Nuevoarticulo);
         res.json(element)
 
@@ -55,11 +55,11 @@ routerArticulos.put ('/', async (req, res) => {
     }
   })
 
-routerArticulos.delete('/:id', async (req,res) => {
+routerDate.delete('/:id', async (req,res) => {
     const id = req.params.id;
 
     try {
-        const DeleteService = await DeleteArticulo();
+        const DeleteService = await DeleteDate();
         const result = await DeleteService(id);
         res.json(result);
 
@@ -68,4 +68,4 @@ routerArticulos.delete('/:id', async (req,res) => {
     }
 })
 
-module.exports = routerArticulos;
+module.exports = routerDate;
