@@ -1,4 +1,5 @@
 const express = require('express')
+const verificarToken = require('../database/auth.js');
 
 // creacion de rutas
 const routerRedaccion = express.Router();
@@ -24,22 +25,22 @@ routerRedaccion.get('/', async (req, res) => {
         const element = await getServicies();
         res.json(element)
     } catch (error) {
-        res.status(500).json({error: 'Esto es un error del sistema'})
+        res.status(500).json({error: 'Error interno del servidor GET'})
     }
 })
 
-routerRedaccion.post('/', async (req, res) => {
+routerRedaccion.post('/', verificarToken, async (req, res) => {
     const Nuevoarticulo = req.body;
     try {
         const PostServicies = await RedaccionPost();
         const element = await PostServicies(Nuevoarticulo);
         res.json(element);
     } catch (error) {
-        res.status(500).json({error: 'Error en el post de la redacción'})
+        res.status(500).json({error: 'Error interno del servidor POST'})
     }
 })
 
-routerRedaccion.put('/', async(req,res) => {
+routerRedaccion.put('/', verificarToken, async(req,res) => {
     const Nuevoarticulo = req.body;
 
     try {
@@ -47,18 +48,18 @@ routerRedaccion.put('/', async(req,res) => {
         const element = await PutServicie(Nuevoarticulo);
         res.json(element);
     } catch (error) {
-        res.status(500).json({error: "Error en la update certificate"})
+        res.status(500).json({error: "Error interno del servidor PUT"})
     }
 })
 
-routerRedaccion.delete('/:id', async(req,res) => {
+routerRedaccion.delete('/:id', verificarToken, async(req,res) => {
     const id = req.params.id;
     try {
          const DeleteService = await DeleteRedaccion()
          const element = await DeleteService(id);
          res.json(element)
     } catch (error) {
-        res.status(500).json({error: "error en el delete de redaccion"})
+        res.status(500).json({error: "Error interno del servidor DELETE"})
     }
 })
 

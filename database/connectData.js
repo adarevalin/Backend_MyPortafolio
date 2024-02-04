@@ -6,7 +6,6 @@ const Connect = () => {
         baseDatos
             .raw('SELECT 1')
             .then(() => {
-                console.log('Conectado a la base de datos PostgreSQL');
                 resolve(baseDatos);
             })
             .catch((error) => {
@@ -17,3 +16,4 @@ const Connect = () => {
 };
 
 module.exports = { Connect };
+

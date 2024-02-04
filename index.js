@@ -2,7 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+require('dotenv').config();
+const cookieParser = require('cookie-parser');
 
 //exportar rutas
 const routerCertificate = require('./routers/Certificate.js');
@@ -13,17 +14,22 @@ const routerDate = require('./routers/date.js')
 const routerNotice = require('./routers/Notices.js')
 const routerChistes = require('./routers/Chistes.js')
 const routerIntereses = require('./routers/Intereses.js')
+const routerEvent = require('./routers/Event.js')
+const routerLogin = require('./routers/Login.js')
 
 // crear app
 const app = express();
-const puerto =process.env.PORT || 8000; // Elige el puerto que prefieras
+const puerto = 8000; // Elige el puerto que prefieras
 
 // ruta de inicio
 
-// Middleware
-app.use(cors());
 app.use(bodyParser.json());
 
+
+// Configuración de CORS
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+
+app.use(cookieParser()); // Configura cookie-parser
 // Uso de Routers
 app.use('/api/portafolio/certificados', routerCertificate);
 app.use('/api/portafolio/articulo', routerArticulos);
@@ -33,10 +39,12 @@ app.use('/api/portafolio/date', routerDate);
 app.use('/api/portafolio/notice', routerNotice);
 app.use('/api/portafolio/chistes', routerChistes);
 app.use('/api/portafolio/intereses', routerIntereses);
+app.use('/api/portafolio/eventos', routerEvent);
+app.use('/api/portafolio/login', routerLogin)
 
 
 app.get('/', (req, res) => {
-  res.json({ mensaje: '¡Hola desde el backend, vamos a construir un portafolio!' });
+  res.json({ mensaje: '¡Hola desde el backend, vamos a la api de un construir un portafolio!' });
 });
 
 // Iniciar el servidor

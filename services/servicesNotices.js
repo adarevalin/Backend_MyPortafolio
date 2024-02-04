@@ -20,7 +20,7 @@ async function GetNotice() {
     const datos = await respuesta.json();
   
     if (respuesta.ok) {
-      console.log('Todo bien');
+      null
     } else {
       console.log('Respuesta de red OK pero respuesta de HTTP no OK');
     }

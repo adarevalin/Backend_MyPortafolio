@@ -1,4 +1,6 @@
 const express = require('express');
+const verificarToken = require('../database/auth.js');
+
 
 const routerDate = express.Router();
 routerDate.use(express.json());
@@ -28,7 +30,7 @@ routerDate.get('/', async (req,res) => {
     }
 });
 
-routerDate.post ('/', async (req,res)=>{
+routerDate.post ('/', verificarToken ,async (req,res)=>{
     const Nuevoarticulo = req.body;
     try { 
         const PostServicies = await PostDate();
@@ -41,7 +43,7 @@ routerDate.post ('/', async (req,res)=>{
   });
 
 
-routerDate.put ('/', async (req, res) => {
+routerDate.put ('/', verificarToken, async (req, res) => {
     //const id = req.params.id;
     const Nuevoarticulo = req.body;
     
@@ -55,7 +57,7 @@ routerDate.put ('/', async (req, res) => {
     }
   })
 
-routerDate.delete('/:id', async (req,res) => {
+routerDate.delete('/:id', verificarToken, async (req,res) => {
     const id = req.params.id;
 
     try {
@@ -64,7 +66,7 @@ routerDate.delete('/:id', async (req,res) => {
         res.json(result);
 
     } catch (error) {
-        res.status(500).json({ error: 'Error interno del servidor' });
+        res.status(500).json({ error: 'Error interno del servidor DELETE' });
     }
 })
 

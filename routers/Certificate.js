@@ -1,4 +1,6 @@
 const express = require('express');
+const verificarToken = require('../database/auth.js');
+
 
 const routerCertificate = express.Router();
 routerCertificate.use(express.json())
@@ -22,11 +24,11 @@ routerCertificate.get('/', async (req, res) => {
       const elementos = await getServicies();
       res.json(elementos);
     } catch (error) {
-        res.status(500).json({ error: 'Error interno del servidor' });
+        res.status(500).json({ error: 'Error interno del servidor GET' });
     }
   }); 
 
-routerCertificate.post('/', async(req, res) => {
+routerCertificate.post('/', verificarToken, async(req, res) => {
   const Nuevoarticulo = req.body;
   try {
     const PostServicies = await PostCertificado();
@@ -34,11 +36,11 @@ routerCertificate.post('/', async(req, res) => {
     res.json(element);
 
   } catch (error) {
-    res.status(500).json({error: 'Error al enviar un dato'})
+    res.status(500).json({error: 'Error interno del servidor POST'})
   }
 });
 
-routerCertificate.put('/', async (req,res) => {
+routerCertificate.put('/', verificarToken, async (req,res) => {
   const Nuevoarticulo = req.body;
 
   try {
@@ -46,11 +48,11 @@ routerCertificate.put('/', async (req,res) => {
     const element = await PutServicie(Nuevoarticulo);
     res.json(element);
   } catch (error) {
-    res.status(500).json({error: "Error en la update certificate"})
+    res.status(500).json({error: "Error interno del servidor PUT"})
   }
 })
 
-routerCertificate.delete('/:id', async(req,res) => {
+routerCertificate.delete('/:id', verificarToken, async(req,res) => {
   const id = req.params.id;
   try {
     const DeleteService = await DeleteCertificate();
@@ -58,7 +60,7 @@ routerCertificate.delete('/:id', async(req,res) => {
     res.json(element)
 
   } catch (error) {
-    res.status(500).json({error: "Error en el Delete certificate"})
+    res.status(500).json({error: "Error interno del servidor DELETE"})
   }
 })
 

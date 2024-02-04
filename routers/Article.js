@@ -1,7 +1,10 @@
 const express = require('express');
+const verificarToken = require('../database/auth.js');
+
 
 const routerArticulos = express.Router();
 routerArticulos.use(express.json());
+
 
 //Servicio general de GET, POST con select total
 const ServicieGet = require('../services/ServiciesGet.js');
@@ -28,7 +31,7 @@ routerArticulos.get('/', async (req,res) => {
     }
 });
 
-routerArticulos.post ('/', async (req,res)=>{
+routerArticulos.post ('/',verificarToken, async (req,res)=>{
     const Nuevoarticulo = req.body;
     try { 
         const PostServicies = await PostArticulos();
@@ -41,7 +44,7 @@ routerArticulos.post ('/', async (req,res)=>{
   });
 
 
-routerArticulos.put ('/', async (req, res) => {
+routerArticulos.put ('/',verificarToken, async (req, res) => {
     //const id = req.params.id;
     const Nuevoarticulo = req.body;
     
@@ -55,7 +58,7 @@ routerArticulos.put ('/', async (req, res) => {
     }
   })
 
-routerArticulos.delete('/:id', async (req,res) => {
+routerArticulos.delete('/:id',verificarToken, async (req,res) => {
     const id = req.params.id;
 
     try {
@@ -64,7 +67,7 @@ routerArticulos.delete('/:id', async (req,res) => {
         res.json(result);
 
     } catch (error) {
-        res.status(500).json({ error: 'Error interno del servidor' });
+        res.status(500).json({ error: 'Error interno del servidor DELETE' });
     }
 })
 

@@ -1,4 +1,5 @@
 const express = require('express')
+const verificarToken = require('../database/auth.js');
 
 // creacion de la ruta
 const routerIntereses = express.Router();
@@ -25,23 +26,23 @@ routerIntereses.get('/', async (req, res) => {
         const element = await getServicies();
         res.json(element)
     }catch (error) {
-        res.status(500).json({ error: 'Error interno del servidor' });
+        res.status(500).json({ error: 'Error interno del servidor GET' });
     }
 })
 
 
-routerIntereses.post('/', async(req, res) => {
+routerIntereses.post('/', verificarToken, async(req, res) => {
     const Nuevoarticulo = req.body;
     try {
         const PostServicies = await PostIntereses();
         const element = await PostServicies(Nuevoarticulo);
         res.json(element);
     } catch (error) {
-        res.status(500).json({ error: 'Error interno del servidor studio Post' });
+        res.status(500).json({ error: 'Error interno del servidor POST' });
     }
 })
 
-routerIntereses.put('/', async(req,res) =>{
+routerIntereses.put('/', verificarToken, async(req,res) =>{
     const Nuevoarticulo = req.body;
 
     try {
@@ -49,19 +50,19 @@ routerIntereses.put('/', async(req,res) =>{
         const element = await PutServicie(Nuevoarticulo);
         res.json(element);
     } catch (error) {
-        res.status(500).json({error: "Error en la update certificate"})
+        res.status(500).json({error: "Error interno del servidor PUT"})
     }
 })
 
-routerIntereses.delete('/:id', async (req,res) => {
+routerIntereses.delete('/:id', verificarToken, async (req,res) => {
     const id = req.params.id;
     try {
         const DeleteService = await DeleteIntereses()
         const element = await DeleteService(id)
         res.json(element)
     }catch (error) {
-        res.status(500).json({error: "error del delete studios"})
+        res.status(500).json({error: "error interno del servidor DELETE"})
     }
 })
 
-module.exports = routerIntereses
+module.exports = routerIntereses;

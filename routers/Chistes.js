@@ -10,7 +10,7 @@ routerChistes.get('/', async (req, res) => {
       const elementos = await GetChistes();
       res.json(elementos);
     } catch (error) {
-        res.status(500).json({ error: 'Error interno del servidor' });
+        res.status(500).json({ error: 'Error interno del servidor GET' });
     }
   }); 
 
