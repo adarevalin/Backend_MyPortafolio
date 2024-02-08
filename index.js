@@ -19,7 +19,7 @@ const routerLogin = require('./routers/Login.js')
 
 // crear app
 const app = express();
-const puerto = 8000; // Elige el puerto que prefieras
+const puerto = 8000 ||  process.env.PORT; // Puerto en el que escuchará la aplicación
 
 // ruta de inicio
 
