@@ -26,8 +26,10 @@ const puerto = 8000 ||  process.env.PORT; // Puerto en el que escuchará la apli
 app.use(bodyParser.json());
 
 
-// Configuración de CORS
-app.use(cors({ credentials: true, origin: ('https://frontend-myportafolio.onrender.com') }));
+app.use(cors({ 
+  credentials: true, 
+  origin: ['http://localhost:3000', 'https://frontend-myportafolio.onrender.com'] 
+}));
 
 app.use(cookieParser()); // Configura cookie-parser
 // Uso de Routers
