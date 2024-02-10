@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
+const compression = require('compression');
 const cors = require('cors');
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
@@ -21,6 +22,8 @@ const routerLogin = require('./routers/Login.js')
 const app = express();
 const puerto = 8000 ||  process.env.PORT; // Puerto en el que escuchará la aplicación
 
+// compresión de datos 
+app.use(compression());
 // ruta de inicio
 
 app.use(bodyParser.json());
