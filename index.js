@@ -31,7 +31,7 @@ app.use(bodyParser.json());
 
 app.use(cors({ 
   credentials: true, 
-  origin: ['http://localhost:3000', 'https://frontend-myportafolio.onrender.com'] 
+  origin: ['http://localhost:3000', 'https://frontend-myportafolio.onrender.com', 'https://3001-cs-b69fbd4a-00fd-41b8-a255-b60bdb28f0d1.cs-us-east1-pkhd.cloudshell.dev'] 
 }));
 
 app.use(cookieParser()); // Configura cookie-parser
